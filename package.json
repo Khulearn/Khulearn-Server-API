@@ -1,0 +1,28 @@
+{
+  "name": "khulearning-server-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.2",
+    "express": "^4.16.3",
+    "lodash": "^4.17.10",
+    "method-override": "^2.3.10",
+    "morgan": "^1.9.0",
+    "odbc": "^1.4.1",
+    "util": "^0.10.3"
+  },
+  "devDependencies": {
+    "color": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "forever start -l ~/ddolsoon-Server-API/logfile.log -a app.js",
+    "restart": "forever restart app.js",
+    "stop": "forever stop app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
