@@ -21,7 +21,12 @@ module.exports = () => {
   app.use(bodyParser.json());
   app.use(methodOverride());
 
+  app.set('views', './app/views');
+  app.set('view engine', 'ejs');
+
   require('../app/routes/users.server.routes.js')(app);
+
+  app.use(express.static('./public'));
   require('./error_handler.js')(app);
 
   return app;
