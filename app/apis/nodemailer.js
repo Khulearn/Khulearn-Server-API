@@ -18,11 +18,11 @@ const transporter = nodemailer.createTransport({
 
 module.exports = user => {
   return new Promise((resolve, reject) => {
-    const verifyEmailUrl = "http://" + config.ip + "/email/verify/" + user._id;
+    const verifyEmailUrl = "http://" + config.ip + "/email/verify/" + user.userID;
 
     const mailOption = {
       from : google.email,
-      to : user.email,
+      to : user.userEmail,
       subject : "Khulearn 가입 인증메일입니다",
       text : "링크를 클릭하시면 인증이 완료됩니다.\n <" + verifyEmailUrl + ">"
     };
