@@ -63,18 +63,11 @@ exports.updateUser = (user, res, next) => {
         db.close(()=>{});
         return next(err);
       }
-      db.query(query2, (err, rows, moreResultSets) => {
-        if(err){
-          console.log("updateUser2 error");
-          console.log(err);
-          db.close(()=>{});
-          return next(err);
-        }
-        res.render('emailCheck', {
-          "name" : rows[0].USERNAME
-        });
-        db.close(()=>{});
-      })
+      const userName = db.querySync(query2)[0].USERNAME;
+      res.render('emailCheck', {
+        "name" : userName
+      });
+      db.close(()=>{});
     });
   });
 };
