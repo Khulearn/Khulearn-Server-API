@@ -51,21 +51,30 @@ exports.updateUser = (user, res, next) => {
       return;
     }
 
-    const query = "update users set userEmailChecked = 'y' where userID = '"
+    const query1 = "update users set userEmailChecked = 'y' where userID = '"
+            +user.userID+"';";
+    const query2 = "select userName from users where userID = '"
             +user.userID+"';";
 
-    db.query(query, (err, rows, moreResultSets) => {
+    db.query(query1, (err, rows, moreResultSets) => {
       if(err){
-        console.log("updateUser error");
+        console.log("updateUser1 error");
         console.log(err);
         db.close(()=>{});
         return next(err);
       }
-      res.json({
-        "result" : "SUCCESS",
-        "user" : user
-      });
-      db.close(()=>{});
+      db.query(query2, (err, rows, moreResultSets) => {
+        if(err){
+          console.log("updateUser2 error");
+          console.log(err);
+          db.close(()=>{});
+          return next(err);
+        }
+        res.render('emailCheck', {
+          "name" : rows[0].USERNAME
+        });
+        db.close(()=>{});
+      })
     });
   });
 };
@@ -88,9 +97,10 @@ exports.findUser = (user, res, next) => {
         db.close(()=>{});
         return next(err);
       }
+
       res.json({
         "result" : "SUCCESS",
-        "userEmailChecked" : util.inspect(rows)
+        "userEmailChecked" : rows[0].USEREMAILCHECKED
       });
       db.close(()=>{});
     });

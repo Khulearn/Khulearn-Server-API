@@ -11,8 +11,9 @@ exports.signup = (req, res, next) => {
 exports.sendEmailForVerified = (req, res, next) => {
   const user = {
     "userID" : req.params.userID,
-    "userEmail" : req.body.UserEmail
+    "userEmail" : req.body.userEmail
   };
+  //user.userID = hashasbase64(req.params.userID);
 
   nodemailer(user).then(result => {
     return res.json({
@@ -26,13 +27,13 @@ exports.sendEmailForVerified = (req, res, next) => {
 };
 
 
-//user
 exports.verifyEmail = (req, res, next) => {
   const user = {
     "userID" : req.params.userID,
-    "userEmailChecked" : "y"
+    "userName" : req.body.userName
   };
-
+  //user.userID = decodehashing(req.params.userID);
+  
   User.updateUser(user, res, next);
 };
 

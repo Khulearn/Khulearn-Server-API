@@ -18,8 +18,7 @@ const transporter = nodemailer.createTransport({
 
 module.exports = user => {
   return new Promise((resolve, reject) => {
-    const verifyEmailUrl = "http://" + config.ip + "/email/verify/" + user.userID;
-
+    const verifyEmailUrl = "http://" + config.ip + "/users/email/verify/" + user.userID;
     const mailOption = {
       from : google.email,
       to : user.userEmail,

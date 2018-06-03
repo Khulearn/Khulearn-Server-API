@@ -6,7 +6,9 @@ module.exports = app => {
 
   app.route('/users/email/:userID')
     .get(users.checkEmailVerified)
-    .post(users.sendEmailForVerified)
-    .put(users.verifyEmail);
+    .post(users.sendEmailForVerified);
+
+  app.route('/users/email/verify/:userID')
+    .get(users.verifyEmail);
 
 };
