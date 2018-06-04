@@ -5,7 +5,7 @@ const db = new odbc.Database();
 
 
 /*
-create table USERS(
+create table USER(
 	userID varchar(25) constraint userID_pk primary key,
 	userName varchar(50),
 	userPassword varchar(64),
@@ -21,11 +21,11 @@ exports.createUser = (user, res, next) => {
       return;
     }
 
-    const query = "insert into users values('"
+    const query = "insert into user values('"
             +user.userID+"', '"
             +user.userName+"', '"
             +user.userPassword+"', '"
-            +user.userEmail+"', 'n');"
+            +user.userEmail+"', 'n');";
 
     db.query(query, (err, rows, moreResultSets) => {
       if(err){
@@ -51,9 +51,9 @@ exports.updateUser = (user, res, next) => {
       return;
     }
 
-    const query1 = "update users set userEmailChecked = 'y' where userID = '"
+    const query1 = "update user set userEmailChecked = 'y' where userID = '"
             +user.userID+"';";
-    const query2 = "select userName from users where userID = '"
+    const query2 = "select userName from user where userID = '"
             +user.userID+"';";
 
     db.query(query1, (err, rows, moreResultSets) => {
@@ -80,7 +80,7 @@ exports.findUser = (user, res, next) => {
       return;
     }
 
-    const query = "select userEmailChecked from users where userID = '"
+    const query = "select userEmailChecked from user where userID = '"
                     + user.userID + "';";
 
     db.query(query, (err, rows, moreResultSets) => {

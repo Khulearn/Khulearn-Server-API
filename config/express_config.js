@@ -24,10 +24,14 @@ module.exports = () => {
   app.set('views', './app/views');
   app.set('view engine', 'ejs');
 
-  require('../app/routes/users.server.routes.js')(app);
-
   app.use(express.static('./public'));
+
+  require('../app/routes/users.server.routes.js')(app);
+  require('../app/routes/video.server.routes.js')(app);
   require('./error_handler.js')(app);
 
-  return app;
+  const server = require('http').createServer(app);
+  require('../app/apis/socketio')(server);
+
+  return server;
 };

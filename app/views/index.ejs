@@ -5,7 +5,25 @@
     <title>Test Page</title>
   </head>
   <body>
-    <div id="test">
+    <div id="UploadBox">
+      <h2>Video Uploader</h2>
+      <span id='UploadArea'>
+          <label for="FileBox">Choose A File: </label><input type="file" id="FileBox"><br>
+          <label for="NameBox">Name: </label><input type="text" id="NameBox"><br>
+
+          <button type='button' id='UploadButton' class='Button'>Upload</button>
+      </span>
     </div>
+
+    <div id="StreamingBox">
+      <h2>Video Streaming</h2>
+      <video id="videoPlayer" controls>
+          <source src= "http://localhost:3000/video/heartsignal_s02_e11" type="video/mp4">
+          Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/api.js"></script>
   </body>
 </html>
