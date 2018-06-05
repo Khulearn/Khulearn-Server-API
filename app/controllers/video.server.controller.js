@@ -1,10 +1,6 @@
 const Video = require('../models/video.server.model');
 const fs = require('fs');
 
-exports.upload = (req, res, next) => {
-
-};
-
 exports.streaming = (req, res, next) => {
   const video = {
     "videoID" : req.params.videoID

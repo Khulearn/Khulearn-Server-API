@@ -4,3 +4,5 @@ node_modules
 *.txt
 googleKey.json
 *.mp4
+*.avi
+*.wmv

@@ -11,12 +11,11 @@ create table VIDEO(
 	constraint lectureID_fk foreign key(lectureID) references lecture(lectureID)
 );
 */
-exports.createVideo = (video, res, next) => {
+exports.createVideo = (video, callback) => {
   db.open(config.tibero, err => {
     if(err){
       console.log("TIBERO connect FAIL");
-      console.log(err);
-      return;
+      return callback(err, null);
     }
 
     const query = "insert into video values('"
@@ -27,14 +26,14 @@ exports.createVideo = (video, res, next) => {
     db.query(query, (err, rows, moreResultSets) => {
       if(err){
         console.log("createVideo error");
-        console.log(err);
         db.close(()=>{});
-        return next(err);
+        return callback(err, null);
       }
-      res.json({
+      const result = {
         "result" : "SUCCESS",
         "video" : video
-      });
+      };
+      callback(null, result);
       db.close(()=>{});
     });
   });

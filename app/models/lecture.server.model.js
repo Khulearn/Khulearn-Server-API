@@ -15,12 +15,11 @@ create table lecture(
 	constraint userID_fk foreign key(userID) references user(userID)
 );
 */
-exports.createLecture = (lecture, res, next) => {
+exports.createLecture = (lecture, callback) => {
   db.open(config.tibero, err => {
     if(err){
       console.log("TIBERO connect FAIL");
-      console.log(err);
-      return;
+      return callback(err, null);
     }
 
     const query = "insert into lecture values('"
@@ -35,14 +34,14 @@ exports.createLecture = (lecture, res, next) => {
     db.query(query, (err, rows, moreResultSets) => {
       if(err){
         console.log("createLecture error");
-        console.log(err);
         db.close(()=>{});
-        return next(err);
+        return callback(err, null);
       }
-      res.json({
+      const result = {
         "result" : "SUCCESS",
         "lecture" : lecture
-      });
+      };
+      callback(null, result);
       db.close(()=>{});
     });
   });
