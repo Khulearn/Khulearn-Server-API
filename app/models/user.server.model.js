@@ -13,42 +13,41 @@ create table USERS(
 	userEmailChecked varchar(2)
 );
 */
-exports.createUser = (user, res, next) => {
+exports.createUser = (user, callback) => {
   db.open(config.tibero, err => {
     if(err){
       console.log("TIBERO connect FAIL");
-      console.log(err);
-      return;
+      return callback(err, null);
     }
 
     const query = "insert into users values('"
             +user.userID+"', '"
             +user.userName+"', '"
             +user.userPassword+"', '"
-            +user.userEmail+"', 'n');"
+            +user.userEmail+"', 'n');";
 
     db.query(query, (err, rows, moreResultSets) => {
       if(err){
         console.log("createUser error");
         console.log(err);
         db.close(()=>{});
-        return next(err);
+        return callback(err, null);
       }
-      res.json({
+      const result = {
         "result" : "SUCCESS",
         "user" : user
-      });
+      };
+      callback(null, result);
       db.close(()=>{});
     });
   });
 };
 
-exports.updateUser = (user, res, next) => {
+exports.updateUser = (user, callback) => {
   db.open(config.tibero, err => {
     if(err){
       console.log("TIBERO connect FAIL");
-      console.log(err);
-      return;
+      return callback(err, null);
     }
 
     const query1 = "update users set userEmailChecked = 'y' where userID = '"
@@ -59,25 +58,21 @@ exports.updateUser = (user, res, next) => {
     db.query(query1, (err, rows, moreResultSets) => {
       if(err){
         console.log("updateUser1 error");
-        console.log(err);
         db.close(()=>{});
-        return next(err);
+        return callback(err, null);
       }
       const userName = db.querySync(query2)[0].USERNAME;
-      res.render('emailCheck', {
-        "name" : userName
-      });
+      callback(null, userName);
       db.close(()=>{});
     });
   });
 };
 
-exports.findUser = (user, res, next) => {
+exports.findUser = (user, callback) => {
   db.open(config.tibero, err => {
     if(err){
       console.log("TIBERO connect FAIL");
-      console.log(err);
-      return;
+      return callback(err, null);
     }
 
     const query = "select userEmailChecked from users where userID = '"
@@ -86,15 +81,14 @@ exports.findUser = (user, res, next) => {
     db.query(query, (err, rows, moreResultSets) => {
       if(err){
         console.log("findUser error");
-        console.log(err);
         db.close(()=>{});
-        return next(err);
+        return callback(err, null);
       }
-
-      res.json({
+      const result = {
         "result" : "SUCCESS",
         "userEmailChecked" : rows[0].USEREMAILCHECKED
-      });
+      };
+      callback(null, result);
       db.close(()=>{});
     });
   });

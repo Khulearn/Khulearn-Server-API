@@ -5,7 +5,10 @@ exports.signup = (req, res, next) => {
   const user = req.body;
   //user.userPassword = hashasbase64(req.body.userPassword);
 
-  User.createUser(user, res, next);
+  User.createUser(user, (err, result) => {
+    if(err) return next(err);
+    res.json(result);
+  });
 };
 
 exports.sendEmailForVerified = (req, res, next) => {
@@ -29,12 +32,16 @@ exports.sendEmailForVerified = (req, res, next) => {
 
 exports.verifyEmail = (req, res, next) => {
   const user = {
-    "userID" : req.params.userID,
-    "userName" : req.body.userName
+    "userID" : req.params.userID
   };
   //user.userID = decodehashing(req.params.userID);
-  
-  User.updateUser(user, res, next);
+
+  User.updateUser(user, (err, userName) => {
+    if(err) return next(err);
+    res.render('emailCheck', {
+      "name" : userName
+    });
+  });
 };
 
 
@@ -43,5 +50,8 @@ exports.checkEmailVerified = (req, res, next) => {
     "userID" : req.params.userID
   };
 
-  User.findUser(user, res, next);
+  User.findUser(user, (err, result) => {
+    if(err) return next(err);
+    res.json(result);
+  });
 };

@@ -3,3 +3,6 @@ node_modules
 *.out
 *.txt
 googleKey.json
+*.mp4
+*.avi
+*.wmv
